@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -7,17 +7,26 @@ import { fileURLToPath } from "node:url";
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 function resolveBun() {
+  const bunName = process.platform === "win32" ? "bun.exe" : "bun";
   const candidates = [
-    process.env.BUN_INSTALL &&
-      path.join(process.env.BUN_INSTALL, "bin", process.platform === "win32" ? "bun.exe" : "bun"),
-    path.join(os.homedir(), ".bun", "bin", process.platform === "win32" ? "bun.exe" : "bun"),
+    process.env.BUN_EXECUTABLE,
+    process.env.BUN_INSTALL && path.join(process.env.BUN_INSTALL, "bin", bunName),
+    path.join(os.homedir(), ".bun", "bin", bunName),
   ].filter(Boolean);
 
   for (const candidate of candidates) {
     if (existsSync(candidate)) return candidate;
   }
 
-  throw new Error("Could not find bun executable. Install from https://bun.com");
+  try {
+    const cmd = process.platform === "win32" ? "where bun" : "which bun";
+    const found = execSync(cmd, { encoding: "utf8" }).trim().split(/\r?\n/)[0];
+    if (found && existsSync(found)) return found;
+  } catch {
+    // not on PATH
+  }
+
+  return bunName;
 }
 
 const bun = resolveBun();
