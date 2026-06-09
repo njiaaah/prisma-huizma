@@ -2,6 +2,12 @@
 
 ## After cloning
 
+set jwt secret in .env (root folder)
+
+```
+JWT_SECRET=some-long-random-string
+```
+
 ```bash
 bun run setup && bun run dev
 ```

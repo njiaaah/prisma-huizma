@@ -9,7 +9,8 @@
     "dev": "node scripts/dev.mjs",
     "dev:api": "bun --hot index.ts",
     "dev:studio": "bun x --bun prisma studio",
-    "dev:frontend": "bun --cwd frontend run dev"
+    "dev:frontend": "bun --cwd frontend run dev",
+    "migrate": "bun x prisma migrate dev"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -19,7 +20,10 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@elysia/cors": "^1.4.2",
+    "@elysia/jwt": "^1.4.2",
     "@prisma/adapter-libsql": "^7.8.0",
-    "@prisma/client": "^7.8.0"
+    "@prisma/client": "^7.8.0",
+    "elysia": "^1.4.28"
   }
 }
