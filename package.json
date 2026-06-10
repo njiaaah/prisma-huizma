@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "setup": "bun install && bun install --cwd frontend && bun x prisma migrate deploy && bun x prisma generate",
-    "install:all": "bun run setup",
     "dev": "node scripts/dev.mjs",
     "dev:api": "bun --hot index.ts",
     "dev:studio": "bun x --bun prisma studio",
