@@ -1,15 +1,18 @@
 # prisma-huisma
 
-To install dependencies:
+## After cloning
 
-```bash
-bun install
+set jwt secret in .env (root folder)
+
+```
+JWT_SECRET=some-long-random-string
 ```
 
-To run:
-
 ```bash
-bun run index.ts
+bun run setup && bun run dev
 ```
 
-This project was created using `bun init` in bun v1.3.8. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+| Command | Description |
+|---------|-------------|
+| `bun run setup` | Full post-clone setup |
+| `bun run dev` | API + Prisma Studio + frontend |
